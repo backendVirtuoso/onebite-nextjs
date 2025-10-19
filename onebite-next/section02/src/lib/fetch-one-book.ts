@@ -6,7 +6,7 @@ export const fetchOneBook = async (id: number): Promise<BookData | null> => {
   try {
     const response = await fetch(url);
     if (!response.ok) {
-      throw new Error();
+      throw new Error("");
     }
 
     return await response.json();
