@@ -10,7 +10,10 @@ export function generateStaticParams() {
 }
 
 async function BookDetail({ bookId }: { bookId: string }) {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/book/${bookId}`);
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book/${bookId}`,
+    { cache: "force-cache" }
+  );
 
   if (!response.ok) {
     if (response.status === 404) {
@@ -42,7 +45,10 @@ async function BookDetail({ bookId }: { bookId: string }) {
 }
 
 async function ReviewList({ bookId }: { bookId: string }) {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/review/book/${bookId}`);
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_SERVER_URL}/review/book/${bookId}`,
+    { next: { tags: [`review-${bookId}`] } }
+  );
 
   if (!response.ok) {
     throw new Error(`Review fetch failed : ${response.statusText}`);
