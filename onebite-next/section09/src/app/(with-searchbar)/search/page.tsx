@@ -1,12 +1,10 @@
 import BookItem from "@/components/book-item";
 import BookListSkeleton from "@/components/skeleton/book-list-skeleton";
 import { BookData } from "@/types";
-import { delay } from "@/util/delay";
 import { Metadata } from "next";
 import { Suspense } from "react";
 
 async function SearchResult({ q }: { q?: string }) {
-  await delay(1500);
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book/search?q=${q}`,
     { cache: 'force-cache' }
@@ -27,7 +25,13 @@ async function SearchResult({ q }: { q?: string }) {
   );
 }
 
-export async function generateMetadata({ searchParams }: { searchParams: Promise<{ q?: string }> }) {
+type Props = {
+  searchParams: Promise<{
+    q?: string;
+  }>;
+};
+
+export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
   // 현재 페이지 메타 데이터를 동적으로 생성하는 역할.
   const { q } = await searchParams;
 
